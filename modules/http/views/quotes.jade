@@ -5,3 +5,7 @@ block content
 		each quote in quotes
 			li
 				div(class="inner", style="border-color: " + quoteBorderColor(quote.quote) + ";")!= formatQuote(quote.quote)
+
+	script(type='text/javascript', src='/js/jquery.js')				
+	script(type='text/javascript', src='/js/masonry.js')
+	script(type='text/javascript', src='/js/init.js')
