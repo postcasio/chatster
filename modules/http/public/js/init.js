@@ -140,7 +140,7 @@ $(function() {
 		},
 		'isAnimated': true,
 		'animationOptions': {
-			'duration': 750,
+			'duration': 250,
 			'easing': 'easeInOutSine'
 		}
 	});
