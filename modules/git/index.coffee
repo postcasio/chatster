@@ -1,7 +1,7 @@
 { promises, filtered } = require('../../utils')
 irc = require 'irc'
 { exec } = require 'child_process'
-
+config = require '../../config'
 client = null
 
 git_pull = filtered text: /^\.pull$/,
@@ -9,7 +9,7 @@ git_pull = filtered text: /^\.pull$/,
 		exec 'git pull', (e, so, se) ->
 			t = so.trim() + "\n" + se.trim()
 			for line in t.split "\n"
-				client.say from, line
+				client.say (if to is config.botName then from else to), line
 
 exports.unload = ->
 	client.removeListener 'message', git_pull
