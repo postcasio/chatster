@@ -2,6 +2,7 @@ storage = require '../storage'
 Sequelize = require 'sequelize'
 { promises, filtered } = require('../../utils')
 irc = require 'irc'
+http = require '../http'
 
 Quote = null
 client = null
@@ -46,7 +47,7 @@ exports.unload = ->
 exports.init = promises (promise) -> (c) ->
 	client = c
 	
-	Quote = storage.db.define "Quote",
+	exports.Quote = Quote = storage.db.define "Quote",
 		quote: Sequelize.STRING,
 		created_at: { type: Sequelize.DATE, defaultValue: Sequelize.NOW }
 		created_by: Sequelize.STRING

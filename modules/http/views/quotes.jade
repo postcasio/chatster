@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	ul(class='latest-quotes quote-list')
+		each quote in quotes
+			li
+				div(class="inner") #{quote.quote}
