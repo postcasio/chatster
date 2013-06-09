@@ -1,4 +1,5 @@
-
+line_matcher = /<(.*?)>\s+(.*?)(?=\s*$|<(.*?)>)/g
+	
 hashstr = (s) ->
 	return 0 unless s.length > 0
 	
@@ -11,7 +12,7 @@ hashstr = (s) ->
 		
 	Math.abs hash
 	
-rgb_to_hsl = (r, g, b) ->
+rgb_to_hsl = (r, g, b, dim=false) ->
 	r = r / 255
 	g = g / 255
 	b = b / 255
@@ -48,9 +49,13 @@ rgb_to_hsl = (r, g, b) ->
 			h += 1
 		if h > 1
 				h -= 1
-			
+	
 		s = Math.min(s * 2, 0.97)
 		l = Math.min(0.5 + l, 0.77)
+		
+		if dim
+			s = 0.2
+			l /= 2
 	
 		return [Math.round(h * 360, 2), Math.round(s * 100, 2) + '%', Math.round(l * 100, 2) + '%']
 
@@ -64,10 +69,18 @@ colorize = (n) ->
 	hsl = rgb_to_hsl r, g, b
 	
 	'<span style="color: hsl(' + hsl.join(',') + ');">' + n + '</span>'
+	
+rgb_of = (n) ->
+	hash = (hashstr n).toString(16).split('')
+	
+	r = parseInt hash.slice(0, 2).join(''), 16
+	g = parseInt hash.slice(2, 4).join(''), 16
+	b = parseInt hash.slice(4, 6).join(''), 16	
 
+	return [r, g, b]
+	
 get_lines = (quote) ->
 	console.log quote
-	line_matcher = /<(.*?)>\s+(.*?)(?=\s*$|<(.*?)>)/g
 
 	while result = line_matcher.exec quote
 		('&lt;' + colorize(result[1]) + '&gt; ' + result[2] + '<br />')
@@ -75,5 +88,20 @@ get_lines = (quote) ->
 exports.formatQuote = (quote) ->
 	lines = get_lines(quote)
 	lines.join ''
-#	quote.replace /<[^>]>/g, (match) ->
-#		"<br />" + match
+	
+exports.quoteBorderColor = (quote) ->
+	color = [0, 0, 0]
+	colors = 0
+	while result = line_matcher.exec quote
+		rgb = rgb_of(result[1])
+		color[0] += rgb[0]
+		color[1] += rgb[1]
+		color[2] += rgb[2]
+		colors++
+	color[0] = color[0] / colors
+	color[1] = color[1] / colors
+	color[2] = color[2] / colors
+	
+	hsl = rgb_to_hsl color[0], color[1], color[2], true
+	
+	'hsl(' + hsl.join(',') + ')'
