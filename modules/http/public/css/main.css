@@ -40,6 +40,7 @@ header {
 	padding: 25px;
 	background: #111;
 	box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+	white-space: pre;
 }
 
 header div {
