@@ -8,8 +8,8 @@ git_pull = filtered text: /^\.pull$/,
 	(from, to, text, message) ->
 		exec 'git pull', (e, so, se) ->
 			t = so.trim() + "\n" + se.trim()
-			for line in t.split "\n"
-				client.say (if to is config.botName then from else to), line
+			line = t.split("\n").pop()
+			client.say (if to is config.botName then from else to), line
 
 exports.unload = ->
 	client.removeListener 'message', git_pull
