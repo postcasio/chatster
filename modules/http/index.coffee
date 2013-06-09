@@ -20,6 +20,8 @@ exports.init = promises (promise) -> ->
 	app.set 'view engine', 'jade'
 	app.set 'views', __dirname + '/views'
 	app.engine 'jade', require('jade').__express
+	
+	app.locals = require('./helpers')
 
 	app.get '/', (req, res) ->
 		console.log quote
