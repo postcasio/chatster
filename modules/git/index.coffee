@@ -7,9 +7,13 @@ client = null
 git_pull = filtered text: /^\.pull$/,
 	(from, to, text, message) ->
 		exec 'git pull origin master', (e, so, se) ->
-			t = so.trim() + "\n" + se.trim()
-			line = t.split("\n").pop()
-			client.say (if to is config.botName then from else to), line
+			reply_to = (if to is config.botName then from else to)
+			if se.length
+				for line in se.trim().split("\n")
+					client.say reply_to, line
+			else
+				line = so.trim().split("\n").pop()
+				client.say reply_to, line
 
 exports.unload = ->
 	client.removeListener 'message', git_pull
