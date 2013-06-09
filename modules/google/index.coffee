@@ -15,8 +15,17 @@ google_search = filtered text: /^\.google\s+(.*)\s*$/,
 			if e
 				client.say reply_to, e
 			else
+				desc = links[0].description
+				m1 = "Cached - Similar"
+				m2 = "- Cached"
+				if (index = desc.indexOf(m1)) >= 0
+					desc = desc.substr(index + m1.length)
+					
+				else if (index = desc.indexOf(m2)) >= 0
+					desc = desc.substr(index + m2.length)
+			
 				client.say reply_to, bold + links[0].title + bold + " - " + links[0].link
-				client.say reply_to, links[0].description.substr(links[0].description.indexOf(s="Cached - Similar") + s.length)
+				client.say reply_to, desc
 				
 
 exports.unload = ->

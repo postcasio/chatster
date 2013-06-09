@@ -11,10 +11,8 @@ load_modules = (list, place=0, send_to=null) ->
 		return
 		
 	module = list[place]
-	if send_to
-		client.say send_to, "Loading module " + module
-	else
-		console.log "Loading module", module
+	
+	console.log "Loading module", module
 	loaded_modules[module] = require '../' + module
 	loaded_modules[module].init(client).then ->
 		load_modules list, place + 1, send_to
@@ -47,6 +45,6 @@ exports.init = promises (promise) -> (c, r, s) ->
 	
 	load_modules(config.modules, 0, s).then ->
 		if s
-			client.say s, "Done."
+			client.say s, "Loaded modules: " + config.modules.join(', ')
 	
 	promise.resolve()
