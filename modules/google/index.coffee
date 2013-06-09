@@ -8,10 +8,10 @@ client = null
 bold = String.fromCharCode(0x02)
 underline = String.fromCharCode(0x1F)
 
-google_search = filtered text: /^\.google\s+(.*)\s*$/,
+google_search = filtered text: /^\.g(oog(le)?)?\s+(.*)\s*$/,
 	(from, to, text, message, match) ->
 		reply_to = (if to is config.botName then from else to)
-		google match[1], (e, next, links) ->
+		google match[3], (e, next, links) ->
 			if e
 				client.say reply_to, e
 			else
