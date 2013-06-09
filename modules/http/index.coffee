@@ -10,6 +10,7 @@ server = null
 
 exports.unload = ->
 	server.close()
+	delete require.cache[require.resolve './helpers']
 		
 exports.init = promises (promise) -> ->
 	express = require 'express'
