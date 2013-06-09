@@ -6,7 +6,7 @@ client = null
 
 git_pull = filtered text: /^\.pull$/,
 	(from, to, text, message) ->
-		exec 'git pull', (e, so, se) ->
+		exec 'git pull origin master', (e, so, se) ->
 			t = so.trim() + "\n" + se.trim()
 			line = t.split("\n").pop()
 			client.say (if to is config.botName then from else to), line
