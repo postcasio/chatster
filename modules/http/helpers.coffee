@@ -112,3 +112,5 @@ exports.quoteBorderColor = (quote) ->
 	hsl.l = Math.min(0.5 + hsl.l, 0.77)
 	
 	hsl.toCSS()
+	
+exports.dateFormat = require 'dateformat'

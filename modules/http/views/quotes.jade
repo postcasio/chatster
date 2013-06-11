@@ -1,7 +1,23 @@
 extends layout
 
 block content
-	ul(class='latest-quotes quote-list')
+	ul.latest-quotes.quote-list
+	
 		each quote in quotes
 			li
-				div(class="inner", style="border-color: " + quoteBorderColor(quote.quote) + ";")!= formatQuote(quote.quote)
+				div.wrapper
+					div.info
+						div.votes
+							a.vote-down.vote-link(href="#", data-id=quote.id).
+								-
+								
+							= (quote.votes_up - quote.votes_down)
+
+							a.vote-up.vote-link(href="#", data-id=quote.id).
+								+
+
+							
+						= dateFormat(quote.createdAt, 'yyyy.mm.dd')	
+						
+					div.inner(style="border-color: " + quoteBorderColor(quote.quote) + ";")
+						!= formatQuote(quote.quote)

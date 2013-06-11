@@ -34,12 +34,22 @@ header {
 	box-sizing: border-box;
 }
 
-.quote-list > li > .inner {
-	border: 1px solid #222;
+.quote-list > li > .wrapper {
 	margin: 25px;
-	padding: 25px;
+}
+.quote-list > li > .wrapper > .inner {
+	border: 1px solid #222;
 	background: #111;
 	box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+	padding: 25px;
+}
+.quote-list > li > .wrapper > .info > .votes {
+	float: right;
+}
+
+.quote-list > li > .wrapper > .info {
+	padding: 0 25px 10px 25px;
+	color: #777;
 }
 
 header div {
@@ -49,4 +59,18 @@ header div {
 header .sub-title {
 	color: #eee;
 	margin-left: 20px;
+}
+
+
+.vote-down {
+	margin-right: 5px;
+}
+
+.vote-up {
+	margin-left: 5px;
+}
+
+.vote-link {
+	color: #ccc;
+	text-decoration: none;
 }

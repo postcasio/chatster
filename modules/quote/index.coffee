@@ -49,7 +49,8 @@ exports.init = promises (promise) -> (c) ->
 	
 	exports.Quote = Quote = storage.db.define "Quote",
 		quote: Sequelize.STRING,
-		created_at: { type: Sequelize.DATE, defaultValue: Sequelize.NOW }
+		votes_up: Sequelize.INTEGER,
+		votes_down: Sequelize.INTEGER,
 		created_by: Sequelize.STRING
 		
 	Quote.sync()
