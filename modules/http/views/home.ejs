@@ -1,0 +1,27 @@
+<% include header %>
+
+<div class="split">
+	<ul class="home-quotes quote-list">
+		<% quotes.forEach(function (quote) { %>
+			<li>
+				<% include quote %>
+			</li>
+		<% }); %>
+	</ul>
+</div>
+<div class="split">
+	<p>welcome to qdb</p>
+	
+	<div class="in-the-chat">
+		<h1>in the chat</h1>
+		<ul>
+			<% for (var user in client.chanData('#cwtest').users) { %>
+				<li>
+					<%- colorize(user) %>
+				</li>
+			<% } %>
+		</ul>
+	</div>
+</div>
+
+<% include footer %>

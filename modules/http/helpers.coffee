@@ -73,7 +73,7 @@ nick_color = (nick) ->
 		parseInt(hash.slice(4, 6), 16)
 	)	
 
-colorize = (nick) ->
+exports.colorize = colorize = (nick) ->
 	hsl = nick_color(nick).toHSL()
 
 	hsl.s = Math.min(hsl.s * 2, 0.97)

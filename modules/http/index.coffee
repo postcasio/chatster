@@ -4,12 +4,21 @@ http = require 'http'
 storage = require '../storage'
 quote = require '../quote'
 Sequelize = require 'sequelize'
-
+jinjs = require 'jinjs'
 { inspect } = require 'util'
+helpers = require './helpers'
 
 app = null
 server = null
 QuoteVote = null
+
+merge = (objects...) ->
+	target = {}
+	for object in objects
+		for key, value of object
+			target[key] = value
+
+	target
 
 exports.unload = ->
 	server.close()
@@ -25,7 +34,7 @@ setup_models = ->
 	
 	quote.Quote.hasMany QuoteVote, foreignKey: 'quote_id'
 		
-exports.init = promises (promise) -> ->
+exports.init = promises (promise) -> (client) ->
 	setup_models()
 
 	express = require 'express'
@@ -33,16 +42,26 @@ exports.init = promises (promise) -> ->
 	app = express()
 
 	app.use express.static(__dirname + '/public')
-	app.set 'view engine', 'jade'
 	app.set 'views', __dirname + '/views'
-	app.engine 'jade', require('jade').__express
 	
-	app.locals = require('./helpers')
+	app.set 'view engine', 'ejs'
+#	app.engine 'jinjs', jinjs.compile
 
 	app.get '/', (req, res) ->
-		quote.Quote.findAll(order: 'createdAt desc', limit: 50).success (quotes) ->
-			res.render 'quotes', quotes: quotes, title: 'latest quotes'
+		quote.Quote.findAll(order: 'createdAt desc', limit: 25).success (quotes) ->
+			res.render 'home', merge(helpers,
+				quotes: quotes,
+				active_page: 'home',
+				client: client
+			)
 			
+	app.get '/quotes', (req, res) ->
+		quote.Quote.findAll(order: 'createdAt desc', limit: 50).success (quotes) ->
+			res.render 'quotes', merge(helpers,
+				quotes: quotes,
+				active_page: 'quotes'
+			)
+
 	app.get /^\/vote\/(\d+)\/(up|down)/, (req, res) ->
 		QuoteVote.findOrCreate({
 			ip: req.ip, quote_id: req.params[0]
