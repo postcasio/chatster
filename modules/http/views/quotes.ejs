@@ -3,21 +3,7 @@
 <ul class="latest-quotes quote-list">
 	<% quotes.forEach(function (quote) { %>
 		<li>
-			<div class="wrapper">
-				<div class="info">
-					<div class="votes">
-						<a class="vote-down vote-link" href="#" data-id="<%= quote.id %>">-</a>
-						<%= quote.votes_up - quote.votes_down %>
-						<a class="vote-up vote-link" href="#" data-id="<%= quote.id %>">+</a>
-					</div>
-					
-					<%= dateFormat(quote.createdAt, 'yyyy.mm.dd') %>
-				</div>
-				
-				<div class="inner" style="border-color: <%= quoteBorderColor(quote.quote) %>;">
-					<%= formatQuote(quote.quote) %>
-				</div>
-			</div>
+			<% include quote %>
 		</li>
 	<% }); %>
 </ul>
