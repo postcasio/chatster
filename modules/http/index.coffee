@@ -4,7 +4,6 @@ http = require 'http'
 storage = require '../storage'
 quote = require '../quote'
 Sequelize = require 'sequelize'
-jinjs = require 'jinjs'
 { inspect } = require 'util'
 helpers = require './helpers'
 
