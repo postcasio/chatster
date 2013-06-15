@@ -71,7 +71,57 @@ exports.init = promises (promise) -> (client) ->
 					active_page: 'quotes',
 					page: page,
 					page_max: page_max
+					term: null
 				)
+				
+	app.get /\/search\/([^\/]+)\/page\/(\d+)/, (req, res) ->
+		term = req.params[0]
+		page = parseInt req.params[1]
+		quote.Quote.count(where: ['quote LIKE ?', '%' + term + '%']).success (quote_count) ->
+			if quote_count is 0
+				res.render 'search-none', merge helpers, term: term, active_page: 'quotes'
+			else
+				page_max = Math.ceil quote_count / per_page
+				quote.Quote.findAll
+					order: 'createdAt desc',
+					offset: (page - 1) * per_page,
+					limit: per_page,
+					where: ['quote LIKE ?', '%' + term + '%']
+					
+				.success (quotes) ->
+					res.render 'quotes', merge(helpers,
+						quotes: quotes,
+						active_page: 'quotes',
+						page: page,
+						page_max: page_max,
+						term: term
+					)
+
+
+				
+	app.get /\/search\/([^\/]+)/, (req, res) ->
+		term = req.params[0]
+		page = 1
+		quote.Quote.count(where: ['quote LIKE ?', '%' + term + '%']).success (quote_count) ->
+			if quote_count is 0
+				res.render 'search-none', merge helpers, term: term, active_page: 'quotes'
+			else
+				page_max = Math.ceil quote_count / per_page
+				quote.Quote.findAll
+					order: 'createdAt desc',
+					offset: (page - 1) * per_page,
+					limit: per_page,
+					where: ['quote LIKE ?', '%' + term + '%']
+					
+				.success (quotes) ->
+					res.render 'quotes', merge(helpers,
+						quotes: quotes,
+						active_page: 'quotes',
+						page: page,
+						page_max: page_max,
+						term: term
+					)
+					
 				
 	app.get /\/quotes\/page\/(\d+)/, (req, res) ->
 		page = parseInt req.params[0]
@@ -87,7 +137,8 @@ exports.init = promises (promise) -> (client) ->
 					quotes: quotes,
 					active_page: 'quotes',
 					page: page,
-					page_max: page_max
+					page_max: page_max,
+					term: null
 				)
 
 	app.get /^\/vote\/(\d+)\/(up|down)/, (req, res) ->

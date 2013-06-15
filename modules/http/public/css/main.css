@@ -136,6 +136,7 @@ ul {
 
 .pagination {
 	text-align: center;
+	clear: both;
 }
 
 .pagination a {
@@ -147,6 +148,17 @@ ul {
 
 .pagination span {
 	margin: 0 25px;
+}
+
+a.nickname {
+	text-decoration: none;
+	display: inline-block;
+	-webkit-transition: color .4s ease;
+}
+a.nickname:hover {
+	background: black;
+	color: white !important;
+	-webkit-transition: color .4s ease;
 }
 
 .pagination a:hover {

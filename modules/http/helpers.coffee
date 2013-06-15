@@ -79,7 +79,7 @@ exports.colorize = colorize = (nick) ->
 	hsl.s = Math.min(hsl.s * 2, 0.97)
 	hsl.l = Math.min(0.5 + hsl.l, 0.77)
 	
-	"<span style=\"color: #{hsl.toCSS()};\">#{nick}</span>"
+	"<a style=\"color: #{hsl.toCSS()};\" class=\"nickname\" href=\"/search/#{nick}\">#{nick}</a>"
 	
 get_lines = (quote) ->
 	console.log quote
