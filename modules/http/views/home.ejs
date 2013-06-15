@@ -15,7 +15,7 @@
 	<div class="in-the-chat">
 		<h1>in the chat</h1>
 		<ul>
-			<% for (var user in client.chanData('#chatworld').users) { %>
+			<% for (var user in chandata.users) { %>
 				<li>
 					<%- colorize(user) %>
 				</li>

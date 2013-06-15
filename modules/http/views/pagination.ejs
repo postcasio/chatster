@@ -1,0 +1,17 @@
+<div class="pagination">
+	<% if (page == 2) { %>
+		<a href="/quotes">&larr; prev</a>
+	<% } else if (page > 1) { %>
+		<a href="/quotes/page/<%= page - 1 %>">&larr; prev</a>
+	<% } else { %>
+		<span class="invisible">&larr; prev</span>
+	<% } %>
+	
+	<%= page %>/<%= page_max %>
+	
+	<% if (page < page_max) { %>
+		<a href="/quotes/page/<%= page + 1 %>">next &rarr;</a>
+	<% } else { %>
+		<span class="invisible">next &rarr;</span>
+	<% } %>
+</div>

@@ -129,3 +129,26 @@ ul {
 	padding: 0;
 	list-style: none;
 }
+
+.invisible {
+	visibility: hidden;
+}
+
+.pagination {
+	text-align: center;
+}
+
+.pagination a {
+	color: #aaa;
+	text-decoration: none;
+	margin: 0 25px;
+	display: inline-block;
+}
+
+.pagination span {
+	margin: 0 25px;
+}
+
+.pagination a:hover {
+	color: #fff;
+}

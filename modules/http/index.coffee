@@ -11,6 +11,8 @@ app = null
 server = null
 QuoteVote = null
 
+per_page = 10
+
 merge = (objects...) ->
 	target = {}
 	for object in objects
@@ -51,19 +53,46 @@ exports.init = promises (promise) -> (client) ->
 			res.render 'home', merge(helpers,
 				quotes: quotes,
 				active_page: 'home',
-				client: client
+				chandata: client.chanData(require('../../config').channels[0])
 			)
 			
 	app.get '/quotes', (req, res) ->
-		quote.Quote.findAll(order: 'createdAt desc', limit: 50).success (quotes) ->
-			res.render 'quotes', merge(helpers,
-				quotes: quotes,
-				active_page: 'quotes'
-			)
+		page = 1
+		quote.Quote.count().success (quote_count) ->
+			page_max = Math.ceil quote_count / per_page
+			quote.Quote.findAll
+				order: 'createdAt desc',
+				offset: (page - 1) * per_page
+				limit: per_page
+				
+			.success (quotes) ->
+				res.render 'quotes', merge(helpers,
+					quotes: quotes,
+					active_page: 'quotes',
+					page: page,
+					page_max: page_max
+				)
+				
+	app.get /\/quotes\/page\/(\d+)/, (req, res) ->
+		page = parseInt req.params[0]
+		quote.Quote.count().success (quote_count) ->
+			page_max = Math.ceil quote_count / per_page
+			quote.Quote.findAll
+				order: 'createdAt desc',
+				offset: (page - 1) * per_page
+				limit: per_page
+				
+			.success (quotes) ->
+				res.render 'quotes', merge(helpers,
+					quotes: quotes,
+					active_page: 'quotes',
+					page: page,
+					page_max: page_max
+				)
 
 	app.get /^\/vote\/(\d+)\/(up|down)/, (req, res) ->
 		QuoteVote.findOrCreate({
-			ip: req.ip, quote_id: req.params[0]
+			ip: req.ip, quote_id: parseInt req.params[0]
 		}, {
 			voted: (if req.params[1] == 'up' then 1 else -1)
 		}).success (vote, created) ->

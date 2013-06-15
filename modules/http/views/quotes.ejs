@@ -1,5 +1,7 @@
 <% include header %>
 
+<% include pagination %>
+
 <ul class="latest-quotes quote-list">
 	<% quotes.forEach(function (quote) { %>
 		<li>
@@ -7,5 +9,7 @@
 		</li>
 	<% }); %>
 </ul>
+
+<% include pagination %>
 
 <% include footer %>
