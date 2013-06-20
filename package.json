@@ -15,7 +15,8 @@
     "express": "3.2.6",
     "ejs": "0.8.4",
     "dateformat": "1.0.6-1.2.3",
-    "sqlite3": "2.1.7"
+    "sqlite3": "2.1.7",
+    "youtube-feeds": "2.2.1"
   },
   "repository": "",
   "author": "",
