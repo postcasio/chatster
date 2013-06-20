@@ -22,7 +22,7 @@ youtube_info = filtered text: /(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\
 		youtube.video(match[1]).details (e, vid) ->
 			console.log vid
 			client.say to, bold + vid.title + bold + " [" + duration(vid.duration) + "] (" + round(vid.rating) + "/5 " + irc.colors.wrap('dark_green', vid.likeCount + "👍") + " " + irc.colors.wrap('dark_red', (vid.ratingCount - vid.likeCount) + "👎") + ")"
-			client.say to, vid.description
+			client.say to, vid.description.substr(0, 100)
 		
 exports.unload = ->
 	client.removeListener 'message', youtube_info
