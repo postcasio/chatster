@@ -16,7 +16,7 @@ duration = (n) ->
 	
 	return minutes + ':' + (if seconds < 10 then '0' else '') + seconds
 
-youtube_info = filtered text: /(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*)/i,
+youtube_info = filtered text: /(?:youtu.be\/|\/v\/|\/u\/\w\/|\/embed\/|\/watch\?v=)([^#\&\?]*)/i,
 	(from, to, text, message, match) ->
 		console.log 'fetching video info ' + match[1]
 		youtube.video(match[1]).details (e, vid) ->
