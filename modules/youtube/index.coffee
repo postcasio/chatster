@@ -20,8 +20,16 @@ youtube_info = filtered text: /(?:youtu.be\/|\/v\/|\/u\/\w\/|\/embed\/|\/watch\?
 	(from, to, text, message, match) ->
 		console.log 'fetching video info ' + match[1]
 		youtube.video(match[1]).details (e, vid) ->
-			console.log vid
-			client.say to, bold + vid.title + bold + " [" + duration(vid.duration) + "] (" + round(vid.rating) + "/5 " + irc.colors.wrap('dark_green', vid.likeCount + "👍") + " " + irc.colors.wrap('dark_red', (vid.ratingCount - vid.likeCount) + "👎") + ")"
+			str = bold + vid.title + bold + " ["
+			str += duration(vid.duration) + "]"
+			if vid.likeCount and vid.ratingCount
+				str += " ("
+				str += irc.colors.wrap('dark_green', vid.likeCount + "👍") + " "
+				str += irc.colors.wrap('dark_red', (vid.ratingCount - vid.likeCount) + "👎")
+				str += ")"
+			
+				
+			client.say to, str
 		
 exports.unload = ->
 	client.removeListener 'message', youtube_info
