@@ -71,6 +71,7 @@ exports.init = promises (promise) -> (c) ->
 	client.on 'message', random_quote
 	client.on 'message', add_quote
 	client.on 'message', search_quote
+	client.on 'message', quote
 	client.on 'message', help
 
 	promise.resolve()
