@@ -39,6 +39,7 @@ quote = filtered text: /^\.quote\s+(\d+)$/,
 	(from, to, text, message, match) ->
 		Quote.find
 			where: ['id = ?', match[1]]
+			limit: 1
 		.success (quote) ->
 			if quote is null
 				client.say to, 'No quote with that ID'
@@ -50,11 +51,13 @@ help = filtered text: /^.quote\s+help\s*$/,
 		client.say to, '.quote ' + irc.colors.wrap('gray', '..........') + ' random quote'
 		client.say to, '.quote add ' + irc.colors.wrap('gray', '......') + ' add a quote'
 		client.say to, '.quote search ' + irc.colors.wrap('gray', '...') + ' search for a quote'
+		client.say to, '.quote <id> ' + irc.colors.wrap('gray', '.....') + ' get a quote'
 
 exports.unload = ->
 	client.removeListener 'message', random_quote
 	client.removeListener 'message', add_quote
 	client.removeListener 'message', search_quote
+	client.removeListener 'message', quote
 	client.removeListener 'message', help
 
 exports.init = promises (promise) -> (c) ->
