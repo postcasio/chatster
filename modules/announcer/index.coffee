@@ -16,10 +16,6 @@ lol = (from, to, text, message) ->
 		lols++
 
 		text = switch lols
-			when 2
-				'double lol'
-			when 3
-				'triple lol'
 			when 4
 				'ultra lol'
 			when 5
