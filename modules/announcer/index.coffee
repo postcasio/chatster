@@ -14,7 +14,7 @@ lol = (from, to, text, message) ->
 		lols = 0
 	else
 		lols++
-		
+
 		text = switch lols
 			when 2
 				'double lol'
@@ -24,21 +24,21 @@ lol = (from, to, text, message) ->
 				'ultra lol'
 			when 5
 				'm-m-m-monster lol'
-				
+
 		if timeout
 			clearTimeout timeout
-		
+
 		setTimeout(->
 			client.say to, str.toUpperCase() + "!!"
 		, 2000)
 
-		
+
 exports.unload = ->
-	client.removeListener 'message', youtube_info
-	
+	client.removeListener 'message', lol
+
 exports.init = promises (promise) -> (c) ->
 	client = c
-	
+
 	client.on 'message', lol
-			
+
 	promise.resolve()
