@@ -19,6 +19,7 @@ load_modules = (list, place=0, send_to=null) ->
 
 reload = filtered text: /^\.reload$/,
 	(from, to, text, message) ->
+		client.setMaxListeners 0
 		reply_to = (if to is config.botName then from else to)
 		client.say reply_to, "Reloading modules..."
 
@@ -41,7 +42,7 @@ exports.init = promises (promise) -> (c, r, s) ->
 	client = c
 	root = r
 
-	client.setMaxListeners 20
+	client.setMaxListeners 0
 
 	client.on 'message', reload
 
