@@ -20,13 +20,16 @@ lol = (from, to, text, message) ->
 				'ultra lol'
 			when 5
 				'm-m-m-monster lol'
+			else
+				null
 
 		if timeout
 			clearTimeout timeout
 
-		setTimeout(->
-			client.say to, str.toUpperCase() + "!!"
-		, 2000)
+		if text
+			setTimeout(->
+				client.say to, text.toUpperCase() + "!!"
+			, 2000)
 
 
 exports.unload = ->
