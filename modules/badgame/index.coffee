@@ -11,11 +11,12 @@ list = null
 list_time = 0
 
 update_list = (body) ->
-	link = /<a href="([a-f0-9]\.png)">[a-f0-9]\.png<\/a>/g;
+	link = /<a href="([a-f0-9]+\.[a-z]+)">[a-f0-9]+\.[a-z]+<\/a>/g;
 	arr = null
 	list = []
-	while (match = link.exec(body)) is not null
+	while (match = link.exec(body))
 		list.push 'http://badgame.net/banners/' + match[1]
+
 	return
 
 badgame = filtered text: /^\.badgame$/,
