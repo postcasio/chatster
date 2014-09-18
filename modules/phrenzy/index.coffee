@@ -11,7 +11,7 @@ list = null
 list_time = 0
 
 update_list = (body) ->
-	link = /<a href="./([^"]+)">[^<]+<\/a>/g;
+	link = /<a href=".\/([^"]+)">[^<]+<\/a>/g;
 	arr = null
 	list = []
 	while (match = link.exec(body))
