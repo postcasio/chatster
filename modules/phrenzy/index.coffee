@@ -11,12 +11,13 @@ list = null
 list_time = 0
 
 update_list = (body) ->
-	link = /<a href=".\/([^"]+)">[^<]+<\/a>/g;
+	link = /<a href="\.\/([^"]+)">[^<]+<\/a>/g;
 	arr = null
 	list = []
+	console.log body
 	while (match = link.exec(body))
 		list.push 'http://www.phrenzy.org/temp/' + match[1]
-
+	console.log list
 	return
 
 phrenzy = filtered text: /^\.random$/,
@@ -24,7 +25,7 @@ phrenzy = filtered text: /^\.random$/,
 		if list
 			client.say to, list[Math.floor Math.random() * list.length]
 		else
-			http.get host: 'phrenzy.org', port: 80, path: '/temp/random.php', (res) ->
+			http.get host: 'www.phrenzy.org', port: 80, path: '/temp/random.php', (res) ->
 				body = ''
 				res.on 'data', (chunk) ->
 					body += chunk
